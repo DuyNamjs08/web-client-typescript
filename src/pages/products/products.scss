@@ -1,0 +1,48 @@
+.product__conatiner {
+  .search__widget {
+    padding: 7px 15px;
+    border: 1px solid #fde4e4;
+    border-radius: 5px;
+    cursor: pointer;
+    input {
+      background-color: transparent;
+      border: none;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  .sorting__widget {
+    select {
+      padding: 7px 15px;
+      border: 1px solid #fde4e4;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+  .paginationBttns {
+    width: 80%;
+    height: 40px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 0.5rem;
+    list-style: none;
+    margin-top: 30px;
+    a {
+        padding: 5px 13px;
+        background: #212245;
+        color: #fff !important;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        margin: 5px;
+        &:hover{
+            background: #df2020;
+        }
+      }
+  }
+}

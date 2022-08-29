@@ -1,0 +1,29 @@
+.cartpage__container {
+  th {
+    text-align: center;
+  }
+
+  .cart__img-box {
+    width: 80px;
+    img {
+      width: 100%;
+    }
+  }
+  .cart__item-del {
+    i {
+      cursor: pointer;
+      font-size: 20px;
+    }
+  }
+  .addTOCart__btn{
+    border:none;
+    color: #fff;
+    background: #df2020;
+    outline: none;
+    padding: 7px 10px;
+    border-radius: 5px;
+    a{
+        color: #fff;
+    }
+  }
+}

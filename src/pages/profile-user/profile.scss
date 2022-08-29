@@ -1,0 +1,64 @@
+.profile__container {
+  .profile__user {
+    background: #f6f6f6;
+    padding: 40px;
+    ul {
+      li {
+        cursor: pointer;
+        transition: all ease-in-out 0.3s;
+        &:hover {
+          color: #df2020;
+        }
+      }
+    }
+  }
+  .details__user {
+    .common__info {
+      text-transform: uppercase;
+      font-size: 1.4rem;
+      font-weight: 700;
+      padding: 0 20px;
+    }
+    ul {
+      list-style: none;
+      li {
+        padding-bottom: 10px;
+        display: flex;
+        span {
+          width: 90px;
+          font-size: 1rem;
+          color: #808080;
+          font-weight: 500;
+          line-height: 21px;
+        }
+      }
+    }
+    .user__rank {
+      background: #ecf2fe;
+      padding: 20px;
+      border-radius: 6px;
+      .user__rank__membership {
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+      .user__rank__details {
+        cursor: pointer;
+        transition: all ease-in-out 0.3s;
+        &:hover {
+          color: #df2020;
+        }
+      }
+    }
+  }
+  .update__user__profile {
+    button {
+      background: #1351c0;
+      border-radius: 6px;
+      color: #fff;
+      cursor: pointer;
+      text-transform: uppercase;
+      padding: 7px;
+      border: none;
+    }
+  }
+}
