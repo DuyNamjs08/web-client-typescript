@@ -1,0 +1,80 @@
+.contact__container{
+    ul{
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        list-style: none;
+        padding: 12px 0 ;
+        border-bottom: 1px solid #ccc;
+        li{
+            font-size: 16px;
+            font-weight: bold;
+            color:#014538;
+            cursor: pointer;
+            transition: all linear 0.3s;
+            &:hover{
+                transform: translateY(-6px);
+            }
+        }
+    }
+    .contact__text{
+        margin-top: 20px;
+        h3{
+            text-align: center;
+            margin-bottom: 20px;
+            color: #df0428;
+        }
+        p{
+            color:rgb(109, 103, 103)
+        }
+    }
+    .feedback__contact{
+        margin-top: 20px;
+        .btn__contact{
+            display: flex;
+            width: 400px;
+            justify-content: center;
+            button{
+                margin-top: 20px;
+                padding: 6px 10px ;
+                background: #df0428;
+                border: none;
+                font-size: 16px;
+                font-weight: 500;
+                color:white;
+                cursor: pointer;
+                border-radius: 4px;
+            }
+        }
+        .feedback__item{
+                display: flex;
+                flex-direction: column;
+                label{
+                    width: 100%;
+                    font-weight: bold;
+                    font-size: 18px;
+                    color:#014538
+                }
+                input{
+                    width: 400px;
+                    padding: 4px 10px;
+                    outline: none;
+                    margin-bottom: 20px;
+                    &:focus{
+                        outline: none;
+                    }
+                }
+                textarea{
+                    width: 400px;
+                    padding: 6px 10px;
+                    min-height: 200px;
+                    border-radius: 4px;
+                    outline: none;
+                    &:focus{
+                        outline: none;
+                    }
+                }
+                
+        }
+    }
+}

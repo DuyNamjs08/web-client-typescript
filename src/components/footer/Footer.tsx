@@ -42,7 +42,7 @@ function Footer() {
                 <span>Phone: 01712345678</span>
               </ListGroupItem>
               <ListGroupItem className="footer__delivery-item ps-0 border-0">
-                <span>email: duynam@gmail.com</span>
+                <span>Email: duynam@gmail.com</span>
               </ListGroupItem>
             </ListGroup>
           </Col>

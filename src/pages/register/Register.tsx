@@ -1,11 +1,12 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import {Link} from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -27,12 +28,10 @@ function Register () {
   const handleSubmit = (event : React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    //   firstName: data.get("firstName"),
-    //   lastName: data.get("lastName"),
-    // });
+    if(data.get('email')==='' || data.get('password')==='' ||
+    data.get('firstName')===''|| data.get('lastName')==='' ){
+     return
+    }
     const dataRegister = {
       email: data.get('email'),
       password: data.get('password'),
@@ -43,6 +42,9 @@ function Register () {
     dispatch(authStart(dataRegister));
     navigate('/login');
   };
+  useEffect(() => {
+    window.scroll(0,0)
+   }, []);
   return (
     <section className="pt-0">
       <ThemeProvider theme={theme}>
@@ -130,7 +132,7 @@ function Register () {
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link to='/login'>
                     Already have an account? Sign in
                   </Link>
                 </Grid>

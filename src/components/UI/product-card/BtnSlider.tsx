@@ -9,9 +9,9 @@ function BtnSlider (props:any) {
     <div>
       <button
         onClick={moveSlide}
-        className={direction === 'next' ? 'btn-slide next' : 'btn-slide prev'}
+        className={direction === 'nextItem' ? 'btn-slide nextItem' : 'btn-slide prev'}
       >
-        <img src={direction === 'next' ? rightArrow : leftArrow} />
+        <img src={direction === 'nextItem' ? rightArrow : leftArrow} />
       </button>
     </div>
   );

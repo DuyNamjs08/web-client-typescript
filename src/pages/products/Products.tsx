@@ -9,6 +9,34 @@ import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../../firebase/firebase-Config';
 // ===== paginate =========
 import ReactPaginate from 'react-paginate';
+import MenuLayout from '../../components/UI/menu-layout/MenuLayout'
+
+const titleMan ='Man Shoes'
+const titleWoman ='Woman Shoes'
+const titleChildren ='Children Shoes'
+const titleSandal ='Sandal'
+const menShoe = [
+  { id: 1, name: "Hunter " },
+  { id: 2, name: "Giay the thao " },
+  { id: 3, name: "Giay chay bo " },
+  { id: 4, name: "Gay da bong " },
+];
+const womanShoe = [
+  { id: 1, name: "Hunter " },
+  { id: 2, name: "GROSTO" },
+  { id: 3, name: "Giay the thao " },
+  { id: 4, name: "Giay chay bo " },
+  { id: 5, name: "Giay bup be " },
+];
+const children = [
+  { id: 1, name: "Giay Tap di" },
+  { id: 2, name: "Giay bup be " },
+  { id: 3, name: "Giay chay bo " },
+];
+const orther = [
+  { id: 1, name: "Sandal " },
+];
+
 
 function Products () {
   //   ==== call Api =======
@@ -28,7 +56,7 @@ function Products () {
       return console.log('not found');
     }
   });
-  const productPerPage = 4;
+  const productPerPage = 6;
   const visitedPage = pageNumber * productPerPage;
   const displayPage = searchedProduct.slice(
     visitedPage,
@@ -61,7 +89,7 @@ function Products () {
   }, []);
   useEffect(() => {
     window.scroll(0, 0);
-  }, []);
+  }, [changePage]);
   return (
     <Helmet title="All-Product">
       <CommonSection title="All Product" />
@@ -92,15 +120,25 @@ function Products () {
                 </select>
               </div>
             </Col>
-            {loading ? (
-              <div>Loading...</div>
-            ) : (
-              displayPage.map((item : any) => (
-                <Col lg="3" md="4" sm="6" xs="6" key={item.id} className="mb-4">
-                  <ProductCard item={item} />
-                </Col>
-              ))
-            )}
+            <Col lg="3" md="6" sm="12">
+              <MenuLayout title={titleMan} dataShoe={menShoe}/>
+              <MenuLayout title={titleWoman} dataShoe={womanShoe} />
+              <MenuLayout title={titleChildren} dataShoe={children}/>
+              <MenuLayout title={titleSandal} dataShoe={orther}/>
+            </Col>
+            <Col lg="9" md="12" sm="12">
+              <Row>
+                {loading ? (
+                  <div>Loading...</div>
+                ) : (
+                  displayPage.map((item:any) => (
+                    <Col lg="3" md="6" sm="12" key={item.id} className="mb-4">
+                      <ProductCard item={item} />
+                    </Col>
+                  ))
+                )}
+              </Row>
+            </Col>
             <ReactPaginate
               pageCount={pageCount}
               onPageChange={changePage}

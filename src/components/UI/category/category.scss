@@ -1,10 +1,15 @@
 .category__item {
-    background: #fde4e4;
-    padding: 30px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.4s;
+  background: #fde4e4;
+  padding: 30px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.4s;
+  img{
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
   }
-  .category__item:hover {
-    transform: translateY(-15px);
-  }  
+}
+.category__item:hover {
+  transform: translateY(-15px);
+}

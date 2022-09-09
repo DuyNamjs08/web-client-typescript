@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect,useState } from 'react';
 import logo from '../../assets/images/img/tinder.png';
 import { Container } from 'reactstrap';
 import { NavLink, Link } from 'react-router-dom';
@@ -6,6 +6,8 @@ import './header.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleCart } from '../../redux/action';
 import MenuHeader from '../UI/menu-header/MenuHeader';
+import {db} from '../../firebase/firebase-Config'
+import { doc, getDoc } from "firebase/firestore";
 const dataHeader = [
   { display: 'Home', path: 'home' },
   { display: 'Products', path: 'product' },
@@ -14,14 +16,14 @@ const dataHeader = [
 ];
 
 function Header () {
+  const takeUid = useSelector((state:any) => state.ReducerCheckout.takeUid);
+  const [img, setImg] = useState<any>();
   const dispatch = useDispatch();
+  const takeName = useSelector((state:any) => state.ReducerCheckout.takeName);
   const totalQuantity = useSelector((state:any) => state.ReducerCheckout.totalQuantity);
   const currentUser = useSelector((state:any) => state.ReducerCheckout.currentUser);
   const totalAmount = useSelector((state:any) => state.ReducerCheckout.totalAmount);
   const cartAr = useSelector((state:any) => state.ReducerCheckout.cartAr);
-  console.log('totalQuantity:', totalQuantity);
-  console.log('totalAmount:', totalAmount);
-  console.log('cartAr:', cartAr);
   const menuRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const toggleMenu = () => menuRef.current?.classList.toggle('show__menu');
@@ -39,6 +41,16 @@ function Header () {
   useEffect(() => {
     window.addEventListener('scroll', onScrollHandler, true);
     return () => window.removeEventListener('scroll', onScrollHandler, true);
+  }, []);
+  useEffect(() => {
+    const getImg = async () => {
+      const docRef = doc(db, "user", takeUid as string);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setImg(docSnap.data()?.img);
+      }
+    };
+    getImg()
   }, []);
   return (
     <header className="header" ref={headerRef}>
@@ -87,8 +99,8 @@ function Header () {
               <Link className='text-decoration-none text-dark' to="/profile">
 
                 {currentUser ? <div className="text-center">
-                <img src="https://www.shareicon.net/data/512x512/2016/08/05/806962_user_512x512.png" alt="" />
-                <p className="mb-0">{currentUser}</p>
+                <img className="img__header" src={`${img ? img : "https://www.shareicon.net/data/512x512/2016/08/05/806962_user_512x512.png" }`} alt="" />
+                <p className="mb-0">{takeName.firstName} {takeName.lastName}</p>
                 </div> : ''}
               </Link>
             </span>

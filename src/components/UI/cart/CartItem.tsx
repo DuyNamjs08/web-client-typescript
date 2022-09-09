@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 function CartItem (props:any) {
   const dispatch = useDispatch();
-  const { id, title, price, img, quantity, totalPrice } = props.item;
+  const {id, title, price, img, quantity,totalPrice,stock,idUser} = props.item;
   console.log('id:::', id);
   return (
     <ListGroupItem className="border-0 cart__item">
@@ -20,7 +20,7 @@ function CartItem (props:any) {
               {quantity}x <span>${price}</span> <span>SubTotal: {totalPrice}$</span>
             </p>
             <div className=" d-flex align-items-center justify-content-between increase__decrease-btn">
-              <span className="increase__btn" onClick={() => dispatch(addItem({ id, title, img, price }))}>
+              <span className="increase__btn" onClick={() => dispatch(addItem({ id, title, img, price,stock,idUser }))}>
                 <i className="ri-add-line"></i>
               </span>
               <span className="quantity">{quantity}</span>

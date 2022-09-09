@@ -1,7 +1,7 @@
 
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth, db } from '../firebase/firebase-Config';
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, setDoc, serverTimestamp,getDoc } from 'firebase/firestore';
 
 export const registerUser = async (props:any) => {
   const { email, password, firstName, lastName } = props
@@ -38,3 +38,18 @@ export const logoutUser = () => {
     console.log('error :', error.message);
   });
 };
+export const takeNameUser = async(id:string)=>{
+  const docRef = doc(db, "user", id);
+  const docSnap = await getDoc(docRef);
+  try{
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      return docSnap.data()
+    } else {
+      console.log("No such document!");
+    }
+   
+  }catch(error:any){
+    console.log(error.message);
+  }
+}

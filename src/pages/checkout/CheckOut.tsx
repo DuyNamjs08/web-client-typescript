@@ -1,26 +1,42 @@
-import React, { useState } from 'react';
+import React from "react";
+import { useState, useEffect } from "react";
+import ModalConfirm from "../../components/UI/modal-confirm/ModalConfirm";
+import { useSelector } from "react-redux";
+import { db, auth } from "../../firebase/firebase-Config";
+import {
+  doc,
+  // addDoc , collection ,
+  updateDoc,
+  addDoc,
+  collection,
+} from "firebase/firestore";
 
-import ModalConfirm from '../../components/UI/modal-confirm/ModalConfirm';
-import { useSelector } from 'react-redux';
-import { db } from '../../firebase/firebase-Config';
-import { doc, setDoc, addDoc, collection } from 'firebase/firestore';
 
-function CheckOut () {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setlastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
-  const [telephone, setTelephone] = useState('');
-  const [country, setCountry] = useState('');
-  const [state, setState] = useState('');
-  const [zip, setZip] = useState('');
-  const [typeofCard, setTypeofCard] = useState('');
-  const [nameOncard, setNameOncard] = useState('');
-  const [creditCardNumber, setCreditCardNumber] = useState('');
-  const [expiration, setExpiration] = useState('');
-  const [CVV, setCVV] = useState('');
+function CheckOut() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setlastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [zip, setZip] = useState("");
+  const [typeofCard, setTypeofCard] = useState("");
+  const [nameOncard, setNameOncard] = useState("");
+  const [creditCardNumber, setCreditCardNumber] = useState("");
+  const [expiration, setExpiration] = useState("");
+  const [CVV, setCVV] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-  const [payment, setPayment] = useState('creditCard');
+  const [payment, setPayment] = useState("creditCard");
+  const cartAr = useSelector((state:any) => state.ReducerCheckout.cartAr);
+  const totalAmount = useSelector((state:any) => state.ReducerCheckout.totalAmount);
+  const totalQuantity = useSelector(
+    (state:any) => state.ReducerCheckout.totalQuantity
+  );
+  const confirm ='not confirm'
+  
+
+
 
   const data = {
     firstName,
@@ -36,31 +52,38 @@ function CheckOut () {
     creditCardNumber,
     expiration,
     CVV,
-    payment
+    payment,
+    confirm:confirm,
   };
 
-  const cartAr = useSelector((state:any) => state.ReducerCheckout.cartAr);
-  const totalAmount = useSelector((state:any) => state.ReducerCheckout.totalAmount);
-  const totalQuantity = useSelector((state:any) => state.ReducerCheckout.totalQuantity);
-  const currentUser = useSelector((state:any) => state.ReducerCheckout.currentUser);
-  console.log('currentUser', currentUser);
+  // const currentUser = useSelector((state) => state.ReducerCheckout.currentUser);
+
   const authCheckOut = async () => {
-    await setDoc(doc(db, 'orders', currentUser), {
-      ...data
+    await addDoc(collection(db, "orders"), {
+      ...data,
+      cartAr: cartAr,
+      currTime: new Date(),
     });
-    await addDoc(collection(db, 'orders'), {
-      name: 'Tokyo',
-      country: 'Japan',
-      totalAmount
+    cartAr.map(async (item:any) => {
+      await updateDoc(doc(db, "product", item.id), {
+        stock: Number(item.stock) - Number(item.quantity),
+      });
     });
   };
+  console.log("cartAr :", cartAr);
+
   const handleModalOpen = async () => {
     setModalOpen(true);
   };
-  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e:any) => {
     e.preventDefault();
     handleModalOpen();
   };
+  auth.currentUser && console.log("idUser:", auth.currentUser.uid);
+  useEffect(() => {
+    
+    window.scroll(0, 0);
+  }, []);
   return (
     <div className="container">
       <main>
@@ -73,23 +96,32 @@ function CheckOut () {
           <div className="col-md-6 col-lg-5 order-md-last">
             <h4 className="d-flex justify-content-between align-items-center mb-3">
               <span className="text-primary">Your cart</span>
-              <span className="badge bg-primary rounded-pill">{totalQuantity}</span>
+              <span className="badge bg-primary rounded-pill">
+                {totalQuantity}
+              </span>
             </h4>
             <ul className="list-group mb-3">
-                {cartAr.length > 0 ? cartAr.map((item:any) => (
-              <li key={item.id} className="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                  <h6 className="my-0">{item.title}</h6>
-                  <small className="text-muted">Brief description</small>
-                </div>
-                <span className="text-muted">{item.price}</span>
-              </li>
-                )) : <li className="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                  <h6 className="my-0">Your cart is empty</h6>
-                </div>
-                <span className="text-muted">0</span>
-              </li>}
+              {cartAr.length > 0 ? (
+                cartAr.map((item:any) => (
+                  <li
+                    key={item.id}
+                    className="list-group-item d-flex justify-content-between lh-sm"
+                  >
+                    <div>
+                      <h6 className="my-0">{item.title}</h6>
+                      <small className="text-muted">Brief description</small>
+                    </div>
+                    <span className="text-muted">{item.price}</span>
+                  </li>
+                ))
+              ) : (
+                <li className="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
+                    <h6 className="my-0">Your cart is empty</h6>
+                  </div>
+                  <span className="text-muted">0</span>
+                </li>
+              )}
 
               <li className="list-group-item d-flex justify-content-between bg-light">
                 <div className="text-success">
@@ -291,19 +323,19 @@ function CheckOut () {
               <hr className="my-4"></hr>
               <h4 className="mb-3">Payment</h4>
               <h2
-                onClick={() => setPayment('creditCard')}
+                onClick={() => setPayment("creditCard")}
                 className="btn btn-primary btn-md me-3"
               >
                 Credit card
               </h2>
               <h2
-                onClick={() => setPayment('cash')}
+                onClick={() => setPayment("cash")}
                 className="btn btn-primary btn-md "
               >
                 Cash
               </h2>
-              {payment === 'creditCard'
-                ? (
+
+              {payment === "creditCard" ? (
                 <div>
                   <div className="my-3">
                     <div className="form-check">
@@ -414,17 +446,13 @@ function CheckOut () {
                   </div>
                   {/* =============== */}
                 </div>
-                  )
-                : (
+              ) : (
                 <div></div>
-                  )}
+              )}
               {/* ============== */}
 
               <hr className="my-4"></hr>
-              <button
-                type="submit"
-                className="w-70 btn btn-primary btn-lg"
-              >
+              <button type="submit" className="w-70 btn btn-primary btn-lg">
                 Continue to checkout
               </button>
             </form>
@@ -436,7 +464,9 @@ function CheckOut () {
       <footer className="my-5 pt-5 text-muted text-center text-small">
         <p className="mb-1">&copy; 2017-2021 Company Name</p>
       </footer>
-      {modalOpen && <ModalConfirm authCheckOut={authCheckOut} setOpenModal={setModalOpen} />}
+      {modalOpen && (
+        <ModalConfirm authCheckOut={authCheckOut} setOpenModal={setModalOpen} />
+      )}
     </div>
   );
 }

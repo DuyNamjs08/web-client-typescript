@@ -10,6 +10,8 @@ export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const DELETE_ITEM = 'DELETE_ITEM';
 export const DELETE_ALL = 'DELETE_ALL';
 export const TOGGLE_CART = 'TOGGLE_CART';
+export const TAKE_NAME = 'TAKE_NAME';
+export const TAKE_UID = 'TAKE_UID';
 
 export const authStart = (payload:any) => ({
   type: AUTH_START,
@@ -68,4 +70,20 @@ export const toggleCart = () => {
   return {
     type: TOGGLE_CART
   };
+};
+
+// ======== take name ========
+
+export const takeName = (data:any) => {
+  return {
+    type: TAKE_NAME,
+    payload:data
+  }
+};
+// ===============take============
+export const takeUidlogin = (data:any) => {
+  return {
+    type: TAKE_UID,
+    payload:data
+  }
 };

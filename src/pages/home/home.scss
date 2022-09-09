@@ -76,3 +76,14 @@
   color: #df2020;
   }
 }
+.feature__img{
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  transition: all 0.3s linear;
+  &:hover{
+    scale: 1.1;
+  }
+}

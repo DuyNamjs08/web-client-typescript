@@ -2,13 +2,20 @@
   width: 100%;
   height: 80px;
   line-height: 80px;
+  .text-center{
+    .img__header{
+      width: 40px;
+      height: 40px;
+      object-fit: cover !important;
+      border-radius: 100px;
+    }
+  }
   // background-color: #ccc;
   .nav__wrapper {
     display: flex;
     // align-items: center;
     .logo {
       text-align: center;
-      height: 60px;
       img {
         width: calc(100% - 60%);
         object-fit: contain;
@@ -34,7 +41,6 @@
         font-size: 1.1rem;
         color: #212245;
         transition: 0.3s;
-        text-decoration: none !important;
         &:hover {
           color: #df2020;
         }
@@ -186,7 +192,7 @@
           margin-top: -10px !important;
         }
         h5 {
-          margin-top: -15px;
+          margin-top: -20px;
         }
       }
       .cart__badge {

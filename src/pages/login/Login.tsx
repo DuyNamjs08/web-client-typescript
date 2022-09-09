@@ -1,5 +1,5 @@
 import * as React from 'react';
-// import { useEffect } from "react";
+import { useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,10 +19,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authStart } from '../../redux/action';
 // backdrop
 import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import {auth} from '../../firebase/firebase-Config'
 
-function Login () {
-  const currentUser = useSelector((state:any) => state.ReducerCheckout.currentUser);
-  const isLoading = useSelector((state:any) => state.ReducerCheckout.isLoading);
+function Login() {
+  const currentUser = useSelector((state: any) => state.ReducerCheckout.currentUser);
+  const error = useSelector((state: any) => state.ReducerCheckout.error);
+  const isLoading = useSelector((state: any) => state.ReducerCheckout.isLoading);
   console.log('currentUser:', currentUser);
   console.log('isLoading:', isLoading);
   const navigate = useNavigate();
@@ -30,6 +33,7 @@ function Login () {
   const theme = createTheme();
   const [loading, setLoading] = useState(false);
   console.log('Loading:', loading);
+  console.log('error:', error);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,12 +45,20 @@ function Login () {
     const dataLogin = {
       email: data.get('email'),
       password: data.get('password'),
-      isRegister: false
+      isRegister: false,
     };
     dispatch(authStart(dataLogin));
-    navigate('/');
-    setLoading(true);
+    if (error) {
+      navigate('/login');
+      toast.error(error);
+    } else {
+      navigate('/');
+      setLoading(true);
+    }
   };
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
   return (
     <section className="pt-0">
       <ThemeProvider theme={theme}>
@@ -57,7 +69,7 @@ function Login () {
               marginTop: 4,
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center'
+              alignItems: 'center',
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -66,12 +78,7 @@ function Login () {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box
-              component="form"
-              onSubmit={handleSubmit}
-              noValidate
-              sx={{ mt: 1 }}
-            >
+            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -96,12 +103,7 @@ function Login () {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
+              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                 Sign In
               </Button>
               <Grid container>
@@ -115,6 +117,7 @@ function Login () {
             </Box>
           </Box>
         </Container>
+        <ToastContainer />
       </ThemeProvider>
     </section>
   );

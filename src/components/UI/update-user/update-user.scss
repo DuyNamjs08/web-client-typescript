@@ -1,0 +1,36 @@
+.update__user__container {
+    form{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        button{
+            padding: 5px 15px ;
+            background-color: transparent;
+            border: 1px solid #df0428;
+            color: #df0428;
+            font-weight: bold;
+        }
+    }
+  .update__main {
+    display: flex;
+    width: 100%;
+    
+    .update__user {
+        label{
+            width: 100%;
+            font-weight: bold;
+            font-size: 16px;
+            color: #014538;
+        }
+        input{
+            padding: 5px 0 ;
+            border: none;
+            outline: none;
+            border-bottom: 1px solid #cccc;
+            &:focus{
+                border: 1px solid #0f92f3;
+            }
+        }
+    }
+  }
+}

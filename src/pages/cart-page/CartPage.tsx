@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import CommonSection from '../../components/UI/common-section/CommonSection';
 import Helmet from '../../components/helmet/Helmet';
 import './cart-page.scss';
@@ -35,6 +35,9 @@ const Tr = (props:any) => {
 function CartPage () {
   const cartAr = useSelector((state:any) => state.ReducerCheckout.cartAr);
   const totalAmount = useSelector((state:any) => state.ReducerCheckout.totalAmount);
+  useEffect(() => {
+    window.scroll(0,0)
+   }, []);
   return (
     <Helmet title="Cart-Page">
       <CommonSection title="Cart Page" />
