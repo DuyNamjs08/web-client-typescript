@@ -100,7 +100,7 @@ function Header () {
 
                 {currentUser ? <div className="text-center">
                 <img className="img__header" src={`${img ? img : "https://www.shareicon.net/data/512x512/2016/08/05/806962_user_512x512.png" }`} alt="" />
-                <p className="mb-0">{takeName.firstName} {takeName.lastName}</p>
+                <p className="mb-0">{takeName?.firstName} {takeName?.lastName}</p>
                 </div> : ''}
               </Link>
             </span>

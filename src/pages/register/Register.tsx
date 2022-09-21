@@ -28,10 +28,6 @@ function Register () {
   const handleSubmit = (event : React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    if(data.get('email')==='' || data.get('password')==='' ||
-    data.get('firstName')===''|| data.get('lastName')==='' ){
-     return
-    }
     const dataRegister = {
       email: data.get('email'),
       password: data.get('password'),
